@@ -1,9 +1,9 @@
 {
   "asOf": "2026-08-05",
-  "generatedAt": "2026-08-05T15:06:47Z",
+  "generatedAt": "2026-08-05T15:14:00Z",
   "market": {
     "symbol": "QQQ",
-    "close": 723.07,
+    "close": 722.84,
     "prevClose": 723.85,
     "changePct": -0.1,
     "ma50": 715.12,
@@ -1763,7 +1763,7 @@
       "open": 726.22,
       "high": 728.54,
       "low": 721.6,
-      "close": 723.07
+      "close": 722.84
     }
   ],
   "ma50Series": [
@@ -3772,8 +3772,8 @@
   ],
   "buckets": {
     "regime": "GOLDEN",
-    "total": 20777132,
-    "growthValue": 16815826,
+    "total": 20771783,
+    "growthValue": 16810477,
     "growthAsset": "QQQ",
     "growthShares": 23256.151979,
     "growthPct": 80.9,
