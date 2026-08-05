@@ -10,7 +10,8 @@ const ZONES = [
 
 export default function FearGreedGauge({ data }: { data: DashboardData }) {
   const fg = data.fearGreed
-  const v = Math.max(0, Math.min(100, fg.value))
+  const unavailable = !fg.available || fg.value == null
+  const v = Math.max(0, Math.min(100, fg.value ?? 0))
   // arc: 180°(left) → 0°(right), center (100, 100), r 80
   const polar = (val: number, r: number) => {
     const a = Math.PI * (1 - val / 100)
@@ -42,14 +43,24 @@ export default function FearGreedGauge({ data }: { data: DashboardData }) {
               opacity={0.9}
             />
           ))}
-          <line x1={100} y1={100} x2={nx} y2={ny} stroke="#e8eef5" strokeWidth={2.5} strokeLinecap="round" />
-          <circle cx={100} cy={100} r={4.5} fill="#e8eef5" />
+          {!unavailable && (
+            <>
+              <line x1={100} y1={100} x2={nx} y2={ny} stroke="#e8eef5" strokeWidth={2.5} strokeLinecap="round" />
+              <circle cx={100} cy={100} r={4.5} fill="#e8eef5" />
+            </>
+          )}
         </svg>
         <div className="absolute inset-x-0 bottom-0 text-center">
-          <div className="text-3xl font-semibold tabular-nums text-[#e8eef5]">{v}</div>
-          <div className="text-sm font-medium" style={{ color: ZONES.find((z) => v >= z.from && v < z.to)?.color }}>
-            {fg.ratingZh} · {fg.rating}
-          </div>
+          {unavailable ? (
+            <div className="pb-2 text-sm text-[#68798a]">暂无数据</div>
+          ) : (
+            <>
+              <div className="text-3xl font-semibold tabular-nums text-[#e8eef5]">{v}</div>
+              <div className="text-sm font-medium" style={{ color: ZONES.find((z) => v >= z.from && v < z.to)?.color }}>
+                {fg.ratingZh} · {fg.rating}
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="mt-4 flex justify-between text-[10px] text-[#68798a]">

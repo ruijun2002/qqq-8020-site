@@ -99,11 +99,19 @@ def fetch_candles():
 
 
 def fetch_fear_greed():
-    """CNN 恐惧与贪婪指数；失败时 available=false，不影响主流程。"""
+    """CNN 恐惧与贪婪指数；失败时保留现有数据，否则 available=false，不影响主流程。"""
     zh = {"extreme fear": "极度恐惧", "fear": "恐惧", "neutral": "中性",
           "greed": "贪婪", "extreme greed": "极度贪婪"}
     try:
-        d = fetch_json("https://production.dataviz.cnn.com/index/fearandgreed/graphdata")
+        url = "https://production.dataviz.cnn.com/index/fearandgreed/graphdata"
+        req_headers = dict(UA)
+        req_headers["Referer"] = "https://edition.cnn.com/markets/fear-and-greed"
+        req = urllib.request.Request(url, headers=req_headers)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                d = json.loads(r.read().decode("utf-8"))
+        except Exception:
+            d = fetch_json(url)
         fg = d["fear_and_greed"]
         rating = str(fg.get("rating", "")).lower()
         return {
@@ -116,6 +124,13 @@ def fetch_fear_greed():
         }
     except Exception as e:  # noqa: BLE001
         print(f"[warn] 恐惧贪婪指数获取失败: {e}", file=sys.stderr)
+        try:
+            prev = json.loads(DATA_PATH.read_text(encoding="utf-8")).get("fearGreed") or {}
+            if prev.get("available") and prev.get("value") is not None:
+                print(f"[warn] 保留上次指数: {prev['value']} ({prev.get('asOf')})", file=sys.stderr)
+                return prev
+        except Exception:  # noqa: BLE001
+            pass
         return {"value": None, "rating": "", "ratingZh": "", "asOf": "",
                 "source": "CNN", "available": False}
 

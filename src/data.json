@@ -3787,12 +3787,12 @@
     "warnings": []
   },
   "fearGreed": {
-    "value": null,
-    "rating": "",
-    "ratingZh": "",
-    "asOf": "",
+    "value": 42.5,
+    "rating": "Fear",
+    "ratingZh": "恐惧",
+    "asOf": "2026-07-31",
     "source": "CNN",
-    "available": false
+    "available": true
   },
   "advice": {
     "signal": "GOLDEN_CROSS",
