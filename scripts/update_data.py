@@ -267,7 +267,11 @@ def main():
             "tone": "success" if golden else "danger",
         },
     }
-    DATA_PATH.write_text(json.dumps(artifact, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    payload = json.dumps(artifact, ensure_ascii=False, indent=2) + "\n"
+    DATA_PATH.write_text(payload, encoding="utf-8")
+    # 同时输出到 public/，随 Pages 部署为同源静态文件（国内访问比 raw.githubusercontent.com 稳定）
+    (ROOT / "public").mkdir(exist_ok=True)
+    (ROOT / "public" / "data.json").write_text(payload, encoding="utf-8")
     print(f"完成：regime={regime} total={round(total):,} 累计收益率={(total - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100:+.1f}%")
 
 

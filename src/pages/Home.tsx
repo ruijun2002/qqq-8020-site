@@ -9,22 +9,28 @@ import FearGreedGauge from '@/sections/FearGreedGauge'
 import BucketsCard from '@/sections/BucketsCard'
 import StrategyGuide from '@/sections/StrategyGuide'
 
-// 公网部署后，打开页面时实时拉取仓库中最新的数据快照；
-// 拉取失败（离线 / 本地开发）时回退到构建时内置的数据。
-const REMOTE_DATA_URL =
-  'https://raw.githubusercontent.com/ruijun2002/qqq-8020-site/main/src/data.json'
+// 公网部署后，打开页面时实时拉取最新数据快照；优先同源静态文件（Pages 托管，国内稳定），
+// 其次 GitHub raw，都失败时回退到构建时内置的数据。
+const DATA_URLS = [
+  'data.json',
+  'https://raw.githubusercontent.com/ruijun2002/qqq-8020-site/main/src/data.json',
+]
 
 export default function Home() {
   const [data, setData] = useState<DashboardData>(bundledData as DashboardData)
 
   useEffect(() => {
     let cancelled = false
-    fetch(REMOTE_DATA_URL, { cache: 'no-store' })
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then((d) => {
-        if (!cancelled && d && d.market && d.candles) setData(d as DashboardData)
-      })
-      .catch(() => {})
+    const tryFetch = (idx: number): Promise<void> => {
+      if (idx >= DATA_URLS.length) return Promise.resolve()
+      return fetch(DATA_URLS[idx], { cache: 'no-store' })
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then((d) => {
+          if (!cancelled && d && d.market && d.candles) setData(d as DashboardData)
+        })
+        .catch(() => tryFetch(idx + 1))
+    }
+    tryFetch(0)
     return () => {
       cancelled = true
     }
