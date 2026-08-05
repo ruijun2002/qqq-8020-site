@@ -1,12 +1,12 @@
 {
   "asOf": "2026-08-05",
-  "generatedAt": "2026-08-05T15:14:00Z",
+  "generatedAt": "2026-08-05T15:25:20Z",
   "market": {
     "symbol": "QQQ",
-    "close": 722.84,
+    "close": 722.26,
     "prevClose": 723.85,
-    "changePct": -0.1,
-    "ma50": 715.12,
+    "changePct": -0.2,
+    "ma50": 715.11,
     "ma200": 646.77,
     "crossDistPct": 10.6,
     "goldenCross": true,
@@ -1762,8 +1762,8 @@
       "date": "2026-08-05",
       "open": 726.22,
       "high": 728.54,
-      "low": 721.6,
-      "close": 722.84
+      "low": 721.02,
+      "close": 722.26
     }
   ],
   "ma50Series": [
@@ -2765,7 +2765,7 @@
     },
     {
       "date": "2026-08-05",
-      "value": 715.12
+      "value": 715.11
     }
   ],
   "ma200Series": [
@@ -3772,8 +3772,8 @@
   ],
   "buckets": {
     "regime": "GOLDEN",
-    "total": 20771783,
-    "growthValue": 16810477,
+    "total": 20758295,
+    "growthValue": 16796988,
     "growthAsset": "QQQ",
     "growthShares": 23256.151979,
     "growthPct": 80.9,
@@ -3797,8 +3797,8 @@
   "advice": {
     "signal": "GOLDEN_CROSS",
     "regime": "GOLDEN",
-    "text": "MA50（715.12）在 MA200（646.77）上方，维持 80% QQQ 正常运作。",
-    "detail": "MA50 = 715.12 美元，MA200 = 646.77 美元，偏离 +10.6%。",
+    "text": "MA50（715.11）在 MA200（646.77）上方，维持 80% QQQ 正常运作。",
+    "detail": "MA50 = 715.11 美元，MA200 = 646.77 美元，偏离 +10.6%。",
     "tone": "success"
   }
 }
