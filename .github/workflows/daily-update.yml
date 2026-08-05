@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: "30 21 * * 1-5"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - ".github/workflows/daily-update.yml"
 
 permissions:
   contents: write
