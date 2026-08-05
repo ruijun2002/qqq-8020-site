@@ -17,7 +17,7 @@ const DATA_URLS = [
 ]
 
 export default function Home() {
-  const [data, setData] = useState<DashboardData>(bundledData as DashboardData)
+  const [data, setData] = useState<DashboardData>(bundledData as unknown as DashboardData)
 
   useEffect(() => {
     let cancelled = false
