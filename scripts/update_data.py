@@ -26,12 +26,15 @@ CANDLES_KEEP = 250
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 
 
-def http_get(url, retries=3):
+def http_get(url, retries=3, headers=None):
     """urllib 优先，失败重试；仍失败回退到 curl（部分网络环境下 urllib 握手不稳定）。"""
+    hdrs = dict(UA)
+    if headers:
+        hdrs.update(headers)
     last = None
     for attempt in range(retries):
         try:
-            req = urllib.request.Request(url, headers=UA)
+            req = urllib.request.Request(url, headers=hdrs)
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.read().decode("utf-8")
         except Exception as e:  # noqa: BLE001
@@ -39,8 +42,11 @@ def http_get(url, retries=3):
             print(f"[warn] urllib 第 {attempt + 1} 次请求失败: {e}", file=sys.stderr)
             time.sleep(2)
     print("[warn] 回退到 curl", file=sys.stderr)
-    out = subprocess.run(["curl", "-sL", "-m", "40", "-A", UA["User-Agent"], url],
-                         capture_output=True, text=True, timeout=60)
+    cmd = ["curl", "-sL", "-m", "40"]
+    for k, v in hdrs.items():
+        cmd += ["-H", f"{k}: {v}"]
+    cmd.append(url)
+    out = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
     if out.returncode != 0 or not out.stdout.strip():
         raise RuntimeError(f"curl 也失败: {out.stderr.strip() or last}")
     return out.stdout
@@ -99,40 +105,47 @@ def fetch_candles():
 
 
 def fetch_fear_greed():
-    """CNN 恐惧与贪婪指数；失败时保留现有数据，否则 available=false，不影响主流程。"""
+    """CNN 恐惧与贪婪指数；接口需要完整浏览器头（否则 418），失败时保留上次值。"""
     zh = {"extreme fear": "极度恐惧", "fear": "恐惧", "neutral": "中性",
           "greed": "贪婪", "extreme greed": "极度贪婪"}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                      "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Referer": "https://edition.cnn.com/",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    urls = [
+        "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
+        "https://production.dataviz.cnn.com/index/fearandgreed/graphdata",
+    ]
+    last_err = None
+    for url in urls:
+        try:
+            d = json.loads(http_get(url, headers=headers))
+            fg = d["fear_and_greed"]
+            rating = str(fg.get("rating", "")).lower()
+            return {
+                "value": round(float(fg["score"]), 1),
+                "rating": rating.title(),
+                "ratingZh": zh.get(rating, rating),
+                "asOf": str(fg.get("timestamp", ""))[:10],
+                "source": "CNN",
+                "available": True,
+            }
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+            print(f"[warn] 指数接口失败 {url}: {e}", file=sys.stderr)
+    print(f"[warn] 恐惧贪婪指数获取失败: {last_err}", file=sys.stderr)
     try:
-        url = "https://production.dataviz.cnn.com/index/fearandgreed/graphdata"
-        req_headers = dict(UA)
-        req_headers["Referer"] = "https://edition.cnn.com/markets/fear-and-greed"
-        req = urllib.request.Request(url, headers=req_headers)
-        try:
-            with urllib.request.urlopen(req, timeout=30) as r:
-                d = json.loads(r.read().decode("utf-8"))
-        except Exception:
-            d = fetch_json(url)
-        fg = d["fear_and_greed"]
-        rating = str(fg.get("rating", "")).lower()
-        return {
-            "value": round(float(fg["score"]), 1),
-            "rating": rating.title(),
-            "ratingZh": zh.get(rating, rating),
-            "asOf": str(fg.get("timestamp", ""))[:10],
-            "source": "CNN",
-            "available": True,
-        }
-    except Exception as e:  # noqa: BLE001
-        print(f"[warn] 恐惧贪婪指数获取失败: {e}", file=sys.stderr)
-        try:
-            prev = json.loads(DATA_PATH.read_text(encoding="utf-8")).get("fearGreed") or {}
-            if prev.get("available") and prev.get("value") is not None:
-                print(f"[warn] 保留上次指数: {prev['value']} ({prev.get('asOf')})", file=sys.stderr)
-                return prev
-        except Exception:  # noqa: BLE001
-            pass
-        return {"value": None, "rating": "", "ratingZh": "", "asOf": "",
-                "source": "CNN", "available": False}
+        prev = json.loads(DATA_PATH.read_text(encoding="utf-8")).get("fearGreed") or {}
+        if prev.get("available") and prev.get("value") is not None:
+            print(f"[warn] 保留上次指数: {prev['value']} ({prev.get('asOf')})", file=sys.stderr)
+            return prev
+    except Exception:  # noqa: BLE001
+        pass
+    return {"value": None, "rating": "", "ratingZh": "", "asOf": "",
+            "source": "CNN", "available": False}
 
 
 def ma_series(closes, window):
