@@ -18,6 +18,22 @@ const DATA_URLS = [
 
 export default function Home() {
   const [data, setData] = useState<DashboardData>(bundledData as unknown as DashboardData)
+  const [refreshing, setRefreshing] = useState(false)
+
+  const loadData = (bustCache = false) => {
+    setRefreshing(true)
+    const tryFetch = (idx: number): Promise<void> => {
+      if (idx >= DATA_URLS.length) return Promise.resolve()
+      const url = bustCache ? `${DATA_URLS[idx]}${DATA_URLS[idx].includes('?') ? '&' : '?'}t=${Date.now()}` : DATA_URLS[idx]
+      return fetch(url, { cache: 'no-store' })
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then((d) => {
+          if (d && d.market && d.candles) setData(d as DashboardData)
+        })
+        .catch(() => tryFetch(idx + 1))
+    }
+    return tryFetch(0).finally(() => setRefreshing(false))
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -39,7 +55,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0d1218] font-sans">
       <main className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6">
-        <SiteHeader data={data} />
+        <SiteHeader data={data} onRefresh={() => loadData(true)} refreshing={refreshing} />
         <HeroStats data={data} />
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
           <div className="lg:col-span-2">

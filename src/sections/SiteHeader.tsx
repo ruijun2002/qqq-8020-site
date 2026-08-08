@@ -1,6 +1,12 @@
 import type { DashboardData } from '@/types/dashboard'
 
-export default function SiteHeader({ data }: { data: DashboardData }) {
+interface Props {
+  data: DashboardData
+  onRefresh?: () => void
+  refreshing?: boolean
+}
+
+export default function SiteHeader({ data, onRefresh, refreshing }: Props) {
   const golden = data.market.regime === 'GOLDEN'
   return (
     <header className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-[#26303d] pb-5">
@@ -19,6 +25,30 @@ export default function SiteHeader({ data }: { data: DashboardData }) {
       <span className="text-sm text-[#68798a]">
         数据截至 {data.asOf} · 每日美股收盘后自动更新
       </span>
+      {onRefresh && (
+        <button
+          type="button"
+          onClick={onRefresh}
+          disabled={refreshing}
+          title="刷新到最新数据"
+          aria-label="刷新到最新数据"
+          className="ml-auto flex items-center gap-1.5 rounded-lg border border-[#26303d] bg-[#151c25] px-3 py-1.5 text-xs text-[#9db0c1] transition-colors hover:border-[#3a4a5c] hover:text-[#e8eef5] disabled:cursor-wait disabled:opacity-70"
+        >
+          <svg
+            viewBox="0 0 16 16"
+            className={`h-3.5 w-3.5 ${refreshing ? 'animate-spin' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M13.5 8a5.5 5.5 0 1 1-1.61-3.89" />
+            <path d="M13.5 2.5v2.6h-2.6" />
+          </svg>
+          {refreshing ? '刷新中' : '刷新'}
+        </button>
+      )}
     </header>
   )
 }
