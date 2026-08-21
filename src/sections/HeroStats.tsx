@@ -35,7 +35,7 @@ export default function HeroStats({ data }: { data: DashboardData }) {
         sub={m.goldenCross ? 'MA50 在 MA200 上方' : 'MA50 在 MA200 下方'}
         accent={m.goldenCross ? '#f2a93b' : '#5b9bff'}
       />
-      <Stat label="总资产" value={`${fmtWan(data.buckets.total)} 万`} sub={`初始 ${fmtWan(INITIAL_CAPITAL)} 万`} />
+      <Stat label="总模拟资产" value={`${fmtWan(data.buckets.total)} 万`} sub={`初始 ${fmtWan(INITIAL_CAPITAL)} 万`} />
       <Stat
         label="累计收益率"
         value={`${diff >= 0 ? '+' : ''}${ret.toFixed(1)}%`}

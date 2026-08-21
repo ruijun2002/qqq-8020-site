@@ -37,7 +37,7 @@ export default function BucketsCard({ data }: { data: DashboardData }) {
 
       <div className="mt-4 flex flex-wrap items-end gap-x-10 gap-y-5">
         <div>
-          <div className="text-xs text-[#9db0c1]">总资产</div>
+          <div className="text-xs text-[#9db0c1]">总模拟资产</div>
           <div className="mt-1 text-4xl font-medium tabular-nums text-[#e8eef5]">
             {fmtWan(b.total)}
             <span className="ml-1.5 text-base font-normal text-[#9db0c1]">万</span>
