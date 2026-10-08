@@ -1,6 +1,6 @@
 {
   "asOf": "2026-10-06",
-  "generatedAt": "2026-10-07T00:52:40Z",
+  "generatedAt": "2026-10-08T01:08:49Z",
   "market": {
     "symbol": "QQQ",
     "close": 759.66,
@@ -3787,10 +3787,10 @@
     "warnings": []
   },
   "fearGreed": {
-    "value": 47.4,
-    "rating": "Neutral",
-    "ratingZh": "中性",
-    "asOf": "2026-10-06",
+    "value": 44.6,
+    "rating": "Fear",
+    "ratingZh": "恐惧",
+    "asOf": "2026-10-07",
     "source": "CNN",
     "available": true
   },
