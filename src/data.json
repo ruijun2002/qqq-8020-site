@@ -1,34 +1,20 @@
 {
-  "asOf": "2026-10-12",
-  "generatedAt": "2026-10-14T00:25:53Z",
+  "asOf": "2026-10-14",
+  "generatedAt": "2026-10-14T23:59:34Z",
   "market": {
     "symbol": "QQQ",
-    "close": 746.04,
-    "prevClose": 751.27,
-    "changePct": -0.7,
-    "ma50": 725.68,
-    "ma200": 672.8,
-    "crossDistPct": 7.9,
+    "close": 728.95,
+    "prevClose": 743.57,
+    "changePct": -2.0,
+    "ma50": 726.66,
+    "ma200": 673.92,
+    "crossDistPct": 7.8,
     "goldenCross": true,
     "signal": "GOLDEN_CROSS",
     "regime": "GOLDEN",
     "currency": "USD"
   },
   "candles": [
-    {
-      "date": "2025-10-14",
-      "open": 595.31,
-      "high": 602.69,
-      "low": 590.13,
-      "close": 598.0
-    },
-    {
-      "date": "2025-10-15",
-      "open": 604.01,
-      "high": 606.7,
-      "low": 595.93,
-      "close": 602.22
-    },
     {
       "date": "2025-10-16",
       "open": 605.11,
@@ -1764,17 +1750,23 @@
       "high": 749.79,
       "low": 744.85,
       "close": 746.04
+    },
+    {
+      "date": "2026-10-13",
+      "open": 739.52,
+      "high": 744.2,
+      "low": 738.83,
+      "close": 743.57
+    },
+    {
+      "date": "2026-10-14",
+      "open": 738.0,
+      "high": 740.53,
+      "low": 726.39,
+      "close": 728.95
     }
   ],
   "ma50Series": [
-    {
-      "date": "2025-10-14",
-      "value": 585.2
-    },
-    {
-      "date": "2025-10-15",
-      "value": 586.03
-    },
     {
       "date": "2025-10-16",
       "value": 586.69
@@ -2766,17 +2758,17 @@
     {
       "date": "2026-10-12",
       "value": 725.68
+    },
+    {
+      "date": "2026-10-13",
+      "value": 726.55
+    },
+    {
+      "date": "2026-10-14",
+      "value": 726.66
     }
   ],
   "ma200Series": [
-    {
-      "date": "2025-10-14",
-      "value": 530.41
-    },
-    {
-      "date": "2025-10-15",
-      "value": 530.78
-    },
     {
       "date": "2025-10-16",
       "value": 531.16
@@ -3768,17 +3760,25 @@
     {
       "date": "2026-10-12",
       "value": 672.8
+    },
+    {
+      "date": "2026-10-13",
+      "value": 673.4
+    },
+    {
+      "date": "2026-10-14",
+      "value": 673.92
     }
   ],
   "buckets": {
     "regime": "GOLDEN",
-    "total": 21245999,
-    "growthValue": 17350020,
+    "total": 20848978,
+    "growthValue": 16952572,
     "growthAsset": "QQQ",
     "growthShares": 23256.151979,
-    "growthPct": 81.7,
-    "cashValue": 3895979,
-    "cashPct": 18.3,
+    "growthPct": 81.3,
+    "cashValue": 3896406,
+    "cashPct": 18.7,
     "moneyFundRate": 0.02,
     "monthlyWithdrawal": 40000,
     "lastWithdrawalMonth": "2026-10",
@@ -3787,18 +3787,18 @@
     "warnings": []
   },
   "fearGreed": {
-    "value": 44.7,
+    "value": 32.4,
     "rating": "Fear",
     "ratingZh": "恐惧",
-    "asOf": "2026-10-13",
+    "asOf": "2026-10-14",
     "source": "CNN",
     "available": true
   },
   "advice": {
     "signal": "GOLDEN_CROSS",
     "regime": "GOLDEN",
-    "text": "MA50（725.68）在 MA200（672.8）上方，维持 80% QQQ 正常运作。",
-    "detail": "MA50 = 725.68 美元，MA200 = 672.8 美元，偏离 +7.9%。",
+    "text": "MA50（726.66）在 MA200（673.92）上方，维持 80% QQQ 正常运作。",
+    "detail": "MA50 = 726.66 美元，MA200 = 673.92 美元，偏离 +7.8%。",
     "tone": "success"
   }
 }
