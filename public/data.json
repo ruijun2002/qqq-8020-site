@@ -1,6 +1,6 @@
 {
   "asOf": "2026-10-23",
-  "generatedAt": "2026-10-23T23:54:05Z",
+  "generatedAt": "2026-10-27T00:39:04Z",
   "market": {
     "symbol": "QQQ",
     "close": 704.4,
@@ -1760,7 +1760,7 @@
     },
     {
       "date": "2026-10-23",
-      "open": 702.1,
+      "open": 702.2,
       "high": 709.3,
       "low": 701.16,
       "close": 704.4
@@ -3787,10 +3787,10 @@
     "warnings": []
   },
   "fearGreed": {
-    "value": 21.0,
-    "rating": "Extreme Fear",
-    "ratingZh": "极度恐惧",
-    "asOf": "2026-10-23",
+    "value": 27.1,
+    "rating": "Fear",
+    "ratingZh": "恐惧",
+    "asOf": "2026-10-26",
     "source": "CNN",
     "available": true
   },
