@@ -1,27 +1,20 @@
 {
-  "asOf": "2026-10-28",
-  "generatedAt": "2026-10-30T01:12:16Z",
+  "asOf": "2026-10-29",
+  "generatedAt": "2026-10-31T00:55:08Z",
   "market": {
     "symbol": "QQQ",
-    "close": 725.61,
-    "prevClose": 721.25,
-    "changePct": 0.6,
-    "ma50": 725.42,
-    "ma200": 678.72,
-    "crossDistPct": 6.9,
+    "close": 715.34,
+    "prevClose": 725.61,
+    "changePct": -1.4,
+    "ma50": 725.41,
+    "ma200": 679.16,
+    "crossDistPct": 6.8,
     "goldenCross": true,
     "signal": "GOLDEN_CROSS",
     "regime": "GOLDEN",
     "currency": "USD"
   },
   "candles": [
-    {
-      "date": "2025-10-30",
-      "open": 632.17,
-      "high": 633.5,
-      "low": 625.94,
-      "close": 626.05
-    },
     {
       "date": "2025-10-31",
       "open": 634.17,
@@ -1764,13 +1757,16 @@
       "high": 726.14,
       "low": 720.3,
       "close": 725.61
+    },
+    {
+      "date": "2026-10-29",
+      "open": 716.54,
+      "high": 718.07,
+      "low": 711.62,
+      "close": 715.34
     }
   ],
   "ma50Series": [
-    {
-      "date": "2025-10-30",
-      "value": 595.41
-    },
     {
       "date": "2025-10-31",
       "value": 596.73
@@ -2766,13 +2762,13 @@
     {
       "date": "2026-10-28",
       "value": 725.42
+    },
+    {
+      "date": "2026-10-29",
+      "value": 725.41
     }
   ],
   "ma200Series": [
-    {
-      "date": "2025-10-30",
-      "value": 536.44
-    },
     {
       "date": "2025-10-31",
       "value": 537.0
@@ -3768,17 +3764,21 @@
     {
       "date": "2026-10-28",
       "value": 678.72
+    },
+    {
+      "date": "2026-10-29",
+      "value": 679.16
     }
   ],
   "buckets": {
     "regime": "GOLDEN",
-    "total": 20774293,
-    "growthValue": 16874896,
+    "total": 20535666,
+    "growthValue": 16636056,
     "growthAsset": "QQQ",
     "growthShares": 23256.151979,
-    "growthPct": 81.2,
-    "cashValue": 3899397,
-    "cashPct": 18.8,
+    "growthPct": 81.0,
+    "cashValue": 3899610,
+    "cashPct": 19.0,
     "moneyFundRate": 0.02,
     "monthlyWithdrawal": 40000,
     "lastWithdrawalMonth": "2026-10",
@@ -3787,18 +3787,18 @@
     "warnings": []
   },
   "fearGreed": {
-    "value": 34.6,
+    "value": 26.2,
     "rating": "Fear",
     "ratingZh": "恐惧",
-    "asOf": "2026-10-29",
+    "asOf": "2026-10-30",
     "source": "CNN",
     "available": true
   },
   "advice": {
     "signal": "GOLDEN_CROSS",
     "regime": "GOLDEN",
-    "text": "MA50（725.42）在 MA200（678.72）上方，维持 80% QQQ 正常运作。",
-    "detail": "MA50 = 725.42 美元，MA200 = 678.72 美元，偏离 +6.9%。",
+    "text": "MA50（725.41）在 MA200（679.16）上方，维持 80% QQQ 正常运作。",
+    "detail": "MA50 = 725.41 美元，MA200 = 679.16 美元，偏离 +6.8%。",
     "tone": "success"
   }
 }
